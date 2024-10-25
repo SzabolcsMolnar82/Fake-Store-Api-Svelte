@@ -1,8 +1,11 @@
 <script lang="ts">
+  import { distance } from 'fastest-levenshtein'
+
   import { onMount } from "svelte";
   var data = []
   var data2 = []
   var kateg:any = []
+  var search = ""
   const api_key = import.meta.env.VITE_API_KEY
   onMount(async() => {
     kateg = new Set()
@@ -17,6 +20,14 @@
 </script>
 
 <main>
+  <input type="text" bind:value={search}
+  on:input={() => 
+  data2 = data.filter(elem => (
+    distance(elem.title, search)/search.length < 0.3) 
+    ||
+    elem.title.includes(search)
+    )
+  }>
   {#if kateg.length > 0}
   Kategória: 
   <select on:change={(e) => data2 = data.filter(elem => elem.category == e.target.value)}>

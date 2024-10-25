@@ -12,5 +12,9 @@
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "svelte": "^4.2.18",
     "vite": "^5.4.1"
+  },
+  "dependencies": {
+    "fastest-levenshtein": "^1.0.16",
+    "levenshtein": "^1.0.5"
   }
 }

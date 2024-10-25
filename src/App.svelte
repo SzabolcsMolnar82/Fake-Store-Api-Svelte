@@ -1,14 +1,32 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
   var data = []
+  var data2 = []
+  var kateg:any = []
   const api_key = import.meta.env.VITE_API_KEY
   onMount(async() => {
+    kateg = new Set()
     data = await fetch(`https://fakestoreapi.com/products/`).then(res => res.json()) 
-  })
+    data.forEach(elem => {
+      kateg.add(elem.category)
+    })
+    kateg = [...kateg]
+    console.log(kateg)
+    data2 = data
+})
 </script>
 
 <main>
-  {#if data.length > 0}
+  {#if kateg.length > 0}
+  Kategória: 
+  <select on:change={(e) => data2 = data.filter(elem => elem.category == e.target.value)}>
+    <option value="all">mind</option>
+    {#each kateg as kat}
+    <option value="{kat}">{kat}</option>
+    {/each}
+  </select>
+  {/if}
+  {#if data2.length > 0}
   <table>
     <tr>
       <th>id</th>
@@ -16,7 +34,7 @@
       <th>price</th>
       <th>category</th>
     </tr>
-    {#each data as elem}
+    {#each data2 as elem}
     <tr>
       <td>{elem.id}</td>
       <td class="pointer" on:click={() => {

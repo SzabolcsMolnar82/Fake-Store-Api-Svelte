@@ -19,12 +19,11 @@
     {#each data as elem}
     <tr>
       <td>{elem.id}</td>
-      <td>{elem.title}</td>
+      <td class="pointer" on:click={() => document.getElementById(`h${elem.id}`).classList.toggle('hidden')}>{elem.title}</td>
       <td>{elem.price}</td>
       <td>{elem.category}</td>
-
     </tr>
-    <tr>
+    <tr class="hidden" id="h{elem.id}">
       <td colspan="6">{elem.description}</td>
       <td><img src="{elem.image}" alt="{elem.title}"></td>
     </tr>
@@ -37,7 +36,13 @@
 table {
  font-size: 12px;
 }
-image {
-  width: 500px;
+img {
+  width: 300px;
+}
+tr.hidden {
+  display: none;
+}
+td.pointer {
+  cursor: pointer;
 }
 </style>
